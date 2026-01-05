@@ -18,13 +18,17 @@ Detects the execution of 'schtasks.exe' being used to create a new task where th
 - https://www.linkedin.com/in/grjk83/
 - @knappresearchlb
 
-Threats
+# Threats
 - CastleRAT
 - CastleLoader
 - TAG150
 
 # MITRE Techniques
 - T1053.005 Scheduled Task/Job: Scheduled Task
+
+# Data Sources
+- Microsoft Defender for Endpoint (MDE)
+  - DeviceProcessEvents
 
 # Query
 
