@@ -41,6 +41,7 @@ The v.proj file is a classic MSBuild bypass payload
 
 # Query
 
+## 1
 ```
 // source: https://www.bleepingcomputer.com/news/security/clickfix-attack-uses-fake-windows-bsod-screens-to-push-malware/
 // Unusual use of msbuild.exe to execute code inside .proj file to bypass AV detection
@@ -48,4 +49,11 @@ DeviceProcessEvents
 | where ( FileName =~ "msbuild.exe" and ProcessCommandLine matches regex @"\\[^\\]\.proj" ) or ( InitiatingProcessFileName =~ "msbuild.exe" and InitiatingProcessCommandLine matches regex @"\\[^\\]\.proj" )
 
 ```
+## 2
+```
+// source: https://www.bleepingcomputer.com/news/security/clickfix-attack-uses-fake-windows-bsod-screens-to-push-malware/
+// Unusual use of msbuild.exe to execute code inside .proj file to bypass AV detection
+DeviceProcessEvents
+| where ( FileName =~ "msbuild.exe" and ProcessCommandLine has "ProgramData" and ProcessCommandLine has ".proj" ) or ( InitiatingProcessFileName =~ "msbuild.exe" and InitiatingProcessCommandLine has "ProgramData" and InitiatingProcessCommandLine has ".proj" )
 
+```
