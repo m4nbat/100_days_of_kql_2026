@@ -22,3 +22,4 @@ etc.
 - https://github.com/m4nbat/100_days_of_kql_2026
 - https://github.com/Jiayang-Lai/100-Days-of-KQL
 - https://github.com/faslam1994/100_days_of_kql
+- https://github.com/JoshuaJapes/100_days_of_kql
