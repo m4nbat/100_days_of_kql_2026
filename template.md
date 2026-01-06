@@ -17,7 +17,7 @@
 # Threats
 - 
 
-# MITRE Techniques
+# MITRE ATT&CK
 - 
 - 
 
