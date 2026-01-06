@@ -4,6 +4,7 @@ Unusual use of msbuild.exe to execute code inside .proj file to bypass AV detect
 # Description
 Unusual use of msbuild.exe to execute code inside .proj file to bypass AV detection
 
+<img width="1600" height="951" alt="image" src="https://github.com/user-attachments/assets/adea3f15-2dee-4a99-922b-207a973c1c2b" />
 
 Context:
 - Execute Payload:
