@@ -3,6 +3,7 @@
 # Requirements:
 - Create a GitHub account
 - Create a repo called 100_days_of_kql (Example: https://github.com/m4nbat/100_days_of_kql_2026)
+- Create a readme.md and add this line to your readme: # #100DaysOfKQL2026 Master repo with instructions: https://github.com/m4nbat/100_days_of_kql_2026/
 - Produce a query each day (if you create a few up front and then just publish each day, this is okay - we all have lives and other stuff to do). - Threat reports are a good source or initial crib off others posting in the community. Start small and work up. It doesn't have to be super sophisticated.
 - Post / tweet on LI and X  #100daysofkql #bridewell @bridewell ( Retweet / Share: [M4nbat on X: "I'm taking some inspiration from @SecurityAura's effort last year and I&…](https://x.com/knappresearchlb/status/2008228508233855122) ) 
 - Learn and get better at producing KQL queries and performing threat research
@@ -23,3 +24,7 @@ etc.
 - https://github.com/Jiayang-Lai/100-Days-of-KQL
 - https://github.com/faslam1994/100_days_of_kql
 - https://github.com/JoshuaJapes/100_days_of_kql
+- https://github.com/tom564/100_days_kql_2026
+
+# #100DaysOfKQL2026 Master repo with instructions: 
+https://github.com/m4nbat/100_days_of_kql_2026/
