@@ -25,6 +25,8 @@ etc.
 - https://github.com/faslam1994/100_days_of_kql
 - https://github.com/JoshuaJapes/100_days_of_kql
 - https://github.com/tom564/100_days_kql_2026
+- https://github.com/TiiTcHY/100_Days_of_KQL/tree/main
+- 
 
 # #100DaysOfKQL2026 Master repo with instructions: 
 https://github.com/m4nbat/100_days_of_kql_2026/
