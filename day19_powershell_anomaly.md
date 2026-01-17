@@ -9,6 +9,7 @@ This detection analytic looks for the execution of powershell.exe with external 
 
 # Author
 - M4nbat
+- TomW
 
 # Socials
 - https://www.linkedin.com/in/grjk83/
@@ -30,7 +31,7 @@ This detection analytic looks for the execution of powershell.exe with external 
 ```
 DeviceNetworkEvents
 | where InitiatingProcessFileName in~ ("powershell.exe" , "pwsh.exe" ) and RemoteIPType =~ "Public"
-| make-series ProcessCount = count() on Timestamp from ago(30d) to now() step 1d by DeviceName
+| make-series ConnectionCount = count() on Timestamp from ago(30d) to now() step 1d by DeviceName
 | render timechart 
 
 ```
