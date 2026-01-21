@@ -2,7 +2,8 @@
 GoTokenTheft utility commandline - disable RestrictedAdmin
 
 # Description
-Post-compromise actions
+UAT-8837 Post-compromise actions.
+
 UAT-8837 can exploit both n-day and zero-day vulnerabilities to gain access to target environments. Most recently, UAT-8837 exploited a ViewState Deserialization zero-day vulnerability in SiteCore products, CVE-2025-53690, to obtain initial access.
 
 After UAT-8837 gains initial access, they begin conducting preliminary reconnaissance, leveraging the following commands:
