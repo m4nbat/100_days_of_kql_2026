@@ -32,7 +32,6 @@ M4nbat
 ```
 // Detects PowerShell commands querying hardware identifiers commonly used for fingerprinting
 DeviceProcessEvents
-| where Timestamp > ago(7d)
 | where FileName =~ "powershell.exe"
 | where ProcessCommandLine has "Win32_BaseBoard" or ProcessCommandLine has "Win32_ComputerSystemProduct"
 | where ProcessCommandLine has_any ("SerialNumber", "UUID")
@@ -43,7 +42,6 @@ DeviceProcessEvents
 ```
 // Detects the specific XOR decryption pattern (Key 'Q') mentioned in the report
 DeviceProcessEvents
-| where Timestamp > ago(7d)
 | where FileName =~ "powershell.exe"
 | where ProcessCommandLine has "-bxor" and ProcessCommandLine has "81" // 81 is the decimal for 'Q' if used in certain logic, or look for 'Q'
 | where ProcessCommandLine has "IEX" or ProcessCommandLine has "Invoke-Expression"
