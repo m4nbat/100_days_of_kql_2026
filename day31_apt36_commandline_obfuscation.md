@@ -29,8 +29,7 @@ Uses regex to find instances where characters are frequently separated by carets
 
 ```
 // Mock data for testing
-// let DeviceProcessEvents = datatable(Timestamp:datetime, DeviceName:string, FileName:string, ProcessCommandLine:string)
-// ["2025-12-30", "GOV-PC-01", "cmd.exe", "c^m^d^.^e^x^e /c ^m^s^h^t^a^..."];
+// let DeviceProcessEvents = datatable(Timestamp:datetime, DeviceName:string, FileName:string, ProcessCommandLine:string, InitiatingProcessParentFileName:string)["2025-12-30", "GOV-PC-01", "cmd.exe", "c^m^d^.^e^x^e /c ^m^s^h^t^a^...","Explorer.exe"];
 DeviceProcessEvents
 | where FileName in~ ("cmd.exe", "powershell.exe", "pwsh.exe")
 // Look for at least 5 carets in the command line (adjust threshold based on false positives)
