@@ -36,12 +36,18 @@ This query identifies cases where BDReinit.exe loads log.dll from a directory th
 
 ```
 DeviceImageLoadEvents
-| where Timestamp > ago(7d)
 | where FileName =~ "log.dll"
 | where InitiatingProcessFileName =~ "BDReinit.exe"
 // Filter out the legitimate installation path
-| where not(FolderPath has_any(@"C:\Program Files\Bitdefender Antivirus Free\", @"C:\Program Files (x86)\Bitdefender Antivirus Free\"))
-| project Timestamp, DeviceName, FolderPath, SHA256, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessParentFileName
+| where not(FolderPath has_any(
+@'\program files\Bitdefender Antivirus Free\',
+@'c:\program files (x86)\Bitdefender Antivirus Free\',
+@'c:\program files\Bitdefender Agent\',
+@'c:\program files (x86)\Bitdefender Agent\',
+@'c:\program files\Bitdefender\Bitdefender Security\',
+@'c:\program files (x86)\Bitdefender\Bitdefender Security\',
+@'c:\program files\Bitdefender\Bitdefender Security App\',
+@'c:\program files (x86)\Bitdefender\Bitdefender Security App\')
 ```
 
 ## Query 2: BDReinit.exe Execution from Non-Standard Paths
@@ -49,11 +55,10 @@ Monitoring for the executable itself being moved to user-writable folders, which
 
 ```
 DeviceProcessEvents
-| where Timestamp > ago(7d)
 | where FileName =~ "BDReinit.exe"
 // Focus on execution from suspicious or user-writable paths
-| where FolderPath has_any(@"\Users\", @"\Downloads\", @"\Desktop\", @"\AppData\", @"\Temp\")
-| project Timestamp, DeviceName, FolderPath, FileName, ProcessCommandLine, InitiatingProcessParentFileName, AccountName
+| where FolderPath has_any(@"\Users\", @"\Downloads\", @"\Desktop\", @"\AppData\", @"\Temp\",@"\Programdata\")
+
 ```
 
 # Query 3: Malicious File Creation Correlation
@@ -62,7 +67,7 @@ Identifies the creation of log.dll and BDReinit.exe in the same non-standard fol
 ```
 let timeframe = 1h;
 DeviceFileEvents
-| where Timestamp > ago(7d)
+| where Timestamp > ago(30d)
 | where FileName in~ ("log.dll", "BDReinit.exe")
 | where not(FolderPath has "Bitdefender")
 | summarize 
