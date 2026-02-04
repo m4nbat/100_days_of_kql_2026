@@ -26,7 +26,7 @@ M4nbat
 
 ## Data Sources
 - Microsoft Defender for Endpoint
-- DeviceImageLoadEvents (Defender XDR)
+    - DeviceImageLoadEvents
 
 ## Detection Queries
 
