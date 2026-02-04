@@ -1,44 +1,39 @@
-# Name
-Suspicious DLL Hijacking and Sideloading (HijackLibs Consolidated)
+# Suspicious DLL Hijacking and Sideloading (HijackLibs — Consolidated)
 
-# Description
-Detects the loading of DLLs that are frequently targeted for hijacking or sideloading (such as version.dll, shcore.dll, libvlc.dll, etc.) when they are loaded from non-standard directories or by suspicious processes. This query uses a "Known-Good" path exclusion logic based on the HijackLibs Sigma feed specifications.
+## Description
+Detects loading of DLLs that are frequently targeted for hijacking or sideloading (e.g., `version.dll`, `shcore.dll`, `libvlc.dll`, etc.) when those DLLs are loaded from non-standard directories or by suspicious processes. Consolidates common high-risk DLL indicators from HijackLibs and related sources to surface attempts to hijack execution flow or sideload malicious libraries.
 
-# References
-https://hijacklibs.net/
+## References
+- https://hijacklibs.net/
+- https://github.com/wietze/HijackLibs
 
-https://github.com/wietze/HijackLibs
-
-# Author
+## Author
 M4nbat
 
-# Socials
-https://www.linkedin.com/in/grjk83/
+## Socials
+- https://www.linkedin.com/in/grjk83/
+- @knappresearchlb
 
-@knappresearchlb
+## Threats / Actors
+- Generic Malware Sideloading
+- Earth Preta
+- APT29 (Cozy Bear)
+- Lazarus Group
 
-Threats
-Generic Malware Sideloading
+## MITRE ATT&CK
+- T1574.001 - Hijack Execution Flow: DLL Search Order Hijacking  
+- T1574.002 - Hijack Execution Flow: DLL Side-Loading
 
-Earth Preta
+## Data Sources
+- Microsoft Defender for Endpoint
+- DeviceImageLoadEvents (Defender XDR)
 
-APT29 (Cozy Bear)
+## Detection Queries
 
-Lazarus Group
+### Query 1 — Consolidated Image Load Detection (Defender XDR)
+Detects high-risk DLLs loaded from non-standard or user-writable locations.
 
-MITRE ATT&CK
-T1574.001 - Hijack Execution Flow: DLL Search Order Hijacking
-
-T1574.002 - Hijack Execution Flow: DLL Side-Loading
-
-Data Sources (Microsoft XDR, Microsoft 365, Microsoft Azure etc. products and table names)
-Microsoft Defender for Endpoint
-
-DeviceImageLoadEvents
-
-Query (1 or more KQL queries for the topic of the detection)
-Query 1: Consolidated Image Load Detection (Defender XDR)
-Code snippet
+```kql
 // Define a list of high-risk DLLs often used in sideloading/hijacking
 let TargetedDLLs = pack_array(
     "libvlc.dll", "version.dll", "shcore.dll", "cryptbase.dll", 
@@ -63,8 +58,12 @@ DeviceImageLoadEvents
      or LoadPath matches regex @"^[a-z]:\\[^\\]+\.exe$" // Loaded from root or suspicious shallow path
 | project Timestamp, DeviceName, FileName, FolderPath, InitiatingProcessFileName, InitiatingProcessCommandLine, SHA256
 | sort by Timestamp desc
-Query 2: Specific VLC libvlc.dll Sideloading (Earth Preta Style)
-Code snippet
+```
+
+### Query 2 — Specific VLC `libvlc.dll` Sideloading (Earth Preta style)
+Targeted detection for `libvlc.dll` loaded from locations other than the standard VLC install folders.
+
+```kql
 // Specific detection for libvlc.dll hijacking often seen in Earth Preta campaigns
 DeviceImageLoadEvents
 | where Timestamp > ago(7d)
@@ -73,4 +72,9 @@ DeviceImageLoadEvents
                        or FolderPath startswith @"C:\Program Files (x86)\VideoLAN\VLC\"
 | where IsStandardPath == false
 | project Timestamp, DeviceName, FolderPath, InitiatingProcessFileName, InitiatingProcessCommandLine
------------ Template End --------------
+```
+
+## Notes
+- Tune the targeted DLL list and excluded paths to your environment to reduce false positives.  
+- Consider correlating load events with process creation events, parent process lineage, and file integrity (hashes) to better assess risk.  
+- Add allowlists for known vendor installers or legitimate third-party application directories where these DLL names are expected.
