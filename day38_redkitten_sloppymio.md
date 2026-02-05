@@ -40,7 +40,6 @@ Detects AppVStreamingUX.exe running from non-standard locations, indicative of c
 
 ```kql
 DeviceProcessEvents
-| where Timestamp > ago(7d)
 | where FileName =~ "AppVStreamingUX.exe"
 // Filter out legitimate locations for App-V
 | where not(FolderPath has_any (
@@ -58,7 +57,6 @@ Looks for network connections to Telegram, raw GitHub content, or Google Drive i
 
 ```kql
 DeviceNetworkEvents
-| where Timestamp > ago(7d)
 | where RemoteUrl has_any ("api.telegram.org", "raw.githubusercontent.com", "drive.google.com")
 // Filter out standard browsers to reduce noise
 | where not(InitiatingProcessFileName in~ ("chrome.exe", "msedge.exe", "firefox.exe", "opera.exe", "brave.exe", "safari.exe"))
@@ -73,7 +71,6 @@ Detects Office apps (Excel/Word/PowerPoint) creating executables or the specific
 
 ```kql
 DeviceFileEvents
-| where Timestamp > ago(7d)
 | where InitiatingProcessFileName in~ ("excel.exe", "winword.exe", "powerpnt.exe")
 | where ActionType == "FileCreated"
 // Look for the specific binary abused by RedKitten or generic executable writes
