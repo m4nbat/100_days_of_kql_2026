@@ -44,10 +44,10 @@ DeviceProcessEvents
 | where FileName =~ "AppVStreamingUX.exe"
 // Filter out legitimate locations for App-V
 | where not(FolderPath has_any (
-    @":\\Program Files\\Microsoft App-V",
-    @":\\Program Files (x86)\\Microsoft App-V",
-    @":\\Windows\\System32",
-    @":\\Windows\\SysWOW64"
+    @":\Program Files\Microsoft App-V",
+    @":\Program Files (x86)\Microsoft App-V",
+    @":\Windows\System32",
+    @":\Windows\SysWOW64"
 ))
 // RedKitten often places this in Temp, ProgramData, or User Profile hidden folders
 | project Timestamp, DeviceName, FileName, FolderPath, ProcessCommandLine, InitiatingProcessFileName, InitiatingProcessCommandLine, AccountName
