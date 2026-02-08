@@ -46,7 +46,7 @@ DeviceProcessEvents
 | where ProcessCommandLine has_any ("v.proj", ".proj") 
 | where ProcessCommandLine has_any (@":\ProgramData\", @":\Users\Public\", @":\Temp\")
 // Filter out likely legitimate build activities (e.g., from Visual Studio directories)
-| where not (ProcessCommandLine has "Visual Studio" or (InitiatingProcessFileName in~ ("devenv.exe", "tfsbuildagent.exe")) 
+| where not (ProcessCommandLine has "Visual Studio" or InitiatingProcessFileName in~ ("devenv.exe", "tfsbuildagent.exe") ) 
 ```
 
 ## Query 2: PowerShell Download and Execute (ClickFix Pattern)
@@ -57,7 +57,9 @@ DeviceProcessEvents
 | where FileName =~ "powershell.exe" or FileName =~ "pwsh.exe"
 // Look for the specific sequence: Start browser/site -> Download file -> Run MSBuild
 | where ProcessCommandLine has_all ("start", "http", "iwr", "msbuild")
+```
 
+```kql
 // Then run this filter on any unexpected hits
 DeviceProcessEvents
 | where FileName =~ "powershell.exe" or FileName =~ "pwsh.exe"
