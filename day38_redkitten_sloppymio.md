@@ -84,7 +84,6 @@ This query utilizes the ScheduledTaskCreated ActionType within DeviceEvents. Thi
 
 ```kql
 DeviceEvents
-| where Timestamp > ago(7d)
 | where ActionType == "ScheduledTaskCreated"
 // Filter for the specific binary abused by RedKitten
 | where AdditionalFields has "AppVStreamingUX.exe"
@@ -103,7 +102,6 @@ This query looks for the execution of schtasks.exe used to create the malicious 
 
 ```kql
 DeviceProcessEvents
-| where Timestamp > ago(7d)
 | where FileName =~ "schtasks.exe"
 // Look for task creation commands
 | where ProcessCommandLine has "/create"
