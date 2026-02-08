@@ -59,10 +59,10 @@ Looks for network connections to Telegram, raw GitHub content, or Google Drive i
 DeviceNetworkEvents
 | where RemoteUrl has_any ("api.telegram.org", "raw.githubusercontent.com", "drive.google.com")
 // Filter out standard browsers to reduce noise
-| where not(InitiatingProcessFileName in~ ("chrome.exe", "msedge.exe", "firefox.exe", "opera.exe", "brave.exe", "safari.exe"))
+| where not(InitiatingProcessFileName in~ ("chrome.exe", "msedge.exe", "firefox.exe", "opera.exe", "brave.exe", "safari.exe","msedgewebview2.exe"))
 // High fidelity: Check if the abused binary is the one calling out
 | extend IsSloppyMIO_Suspect = iff(InitiatingProcessFileName =~ "AppVStreamingUX.exe", true, false)
-| project Timestamp, DeviceName, ActionType, RemoteUrl, RemoteIP, InitiatingProcessFileName, InitiatingProcessFolderPath, IsSloppyMIO_Suspect
+| project Timestamp, DeviceName, InitiatingProcessAccountName, ActionType, RemoteUrl, RemoteIP, InitiatingProcessFileName, InitiatingProcessFolderPath, IsSloppyMIO_Suspect
 | sort by IsSloppyMIO_Suspect desc
 ```
 
