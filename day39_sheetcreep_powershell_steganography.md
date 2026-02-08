@@ -37,13 +37,11 @@ Detects the specific combination of reading bytes from an image file and immedia
 ```kql
 // Microsoft Defender for Endpoint (DeviceProcessEvents)
 DeviceProcessEvents
-| where Timestamp > ago(24h)
 | where FileName =~ "powershell.exe" or FileName =~ "pwsh.exe"
 // Look for the specific .NET methods used to read the payload and load the assembly
 | where ProcessCommandLine has_all ("ReadAllBytes", "System.Reflection.Assembly", "Load")
 // Filter for common image extensions used in this technique
 | where ProcessCommandLine has_any (".png", ".jpg", ".jpeg", ".bmp", ".gif")
-| project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, AccountName
 ```
 
 ## Query 2: PowerShell Byte Array Reversal (Specific Campaign TTP)
@@ -52,10 +50,7 @@ Detects the specific byte reversal logic ($b.Length-1)..0 observed in the SHEETC
 ```kql
 // Microsoft Defender for Endpoint (DeviceProcessEvents)
 DeviceProcessEvents
-| where Timestamp > ago(24h)
 | where FileName =~ "powershell.exe" or FileName =~ "pwsh.exe"
 // The distinct byte reversal array slicing syntax used by the malware
-| where ProcessCommandLine has "Length-1" and ProcessCommandLine has "..0"
-| where ProcessCommandLine has "IO.File"
-| project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, AccountName
+| where ProcessCommandLine has_all ( "Length-1","..0","IO.File","System.Reflection.Assembly" )
 ```
