@@ -19,7 +19,7 @@ Detects indicators associated with OysterLoader (aka Broomstick/CleanUpLoader). 
 - OysterLoader
 - Broomstick
 - CleanUpLoader
-- Rhysida Ransomware (Affiliate Loader)
+- Rhysida Ransomware
 
 # MITRE ATT&CK
 - T1053.005: Scheduled Task/Job: Scheduled Task
@@ -33,9 +33,7 @@ Detects indicators associated with OysterLoader (aka Broomstick/CleanUpLoader). 
 
 ```kql
 DeviceProcessEvents
-| where Timestamp > ago(24h)
 | where FileName =~ "schtasks.exe"
-| where ProcessCommandLine has "create"
-| where ProcessCommandLine has "ClearMngs" or (ProcessCommandLine has "rundll32" and ProcessCommandLine has "Test")
+| where ProcessCommandLine has "create" and ( ProcessCommandLine has "ClearMngs" or ( ProcessCommandLine has "rundll32" and ProcessCommandLine has "Test") )
 | project Timestamp, DeviceName, AccountName, ProcessCommandLine, InitiatingProcessFileName, SHA256
 ```
