@@ -33,7 +33,6 @@ Detects indicators associated with OysterLoader (aka Broomstick/CleanUpLoader). 
 
 ```kql
 DeviceEvents
-| where Timestamp > ago(24h)
 | where ActionType == "ScheduledTaskCreated"
 // Perform string search on the dynamic field first for performance
 | where AdditionalFields has "rundll32" and AdditionalFields has "AppData"
