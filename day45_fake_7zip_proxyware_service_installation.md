@@ -16,8 +16,6 @@ In February 2026, a sophisticated malware campaign was identified abusing the po
 
 # Threats
 - upStage Proxy
-- Uphero
-- hero.exe
 
 # MITRE ATT&CK
 - T1543.003: Create or Modify System Process: Windows Service
@@ -32,9 +30,7 @@ In February 2026, a sophisticated malware campaign was identified abusing the po
 ```kql
 // Detects the creation of the Windows Service for persistence
 DeviceRegistryEvents
-| where Timestamp > ago(30d)
-| where RegistryKey has @"SYSTEM\CurrentControlSet\Services"
-| where (RegistryKey has "Uphero" or RegistryKey has "hero")
 | where ActionType == "RegistryKeyCreated"
+| where RegistryKey has @"SYSTEM\CurrentControlSet\Services" and (RegistryKey has "Uphero" or RegistryKey has "hero")
 | project Timestamp, DeviceName, ActionType, RegistryKey, InitiatingProcessCommandLine
 ```
