@@ -16,8 +16,6 @@ In February 2026, a sophisticated malware campaign was identified abusing the po
 
 # Threats
 - upStage Proxy
-- Uphero
-- hero.exe
 
 # MITRE ATT&CK
 - T1090.003: Proxy: Multi-hop Proxy
@@ -32,7 +30,6 @@ In February 2026, a sophisticated malware campaign was identified abusing the po
 ```kql
 // Detects network connections to identified C2 domains or proxy control endpoints
 DeviceNetworkEvents
-| where Timestamp > ago(30d)
 | where RemoteUrl has_any ("hero-sms", "herosms", "smshero") 
     or RemoteUrl in~ ("iplogger.org", "svc.ha-teams.office.com")
 | project Timestamp, DeviceName, ActionType, RemoteUrl, RemoteIP, RemotePort, InitiatingProcessFileName
