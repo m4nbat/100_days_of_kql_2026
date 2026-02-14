@@ -16,8 +16,6 @@ In February 2026, a sophisticated malware campaign was identified abusing the po
 
 # Threats
 - upStage Proxy
-- Uphero
-- hero.exe
 
 # MITRE ATT&CK
 - T1562.004: Impair Defenses: Disable or Modify System Firewall
@@ -32,10 +30,6 @@ In February 2026, a sophisticated malware campaign was identified abusing the po
 ```kql
 // Detects netsh commands adding firewall exceptions for the proxyware binaries
 DeviceProcessEvents
-| where Timestamp > ago(30d)
-| where FileName =~ "netsh.exe"
-| where ProcessCommandLine has "advfirewall firewall add rule"
-| where ProcessCommandLine has "allow"
-| where ProcessCommandLine has_any ("hero.exe", "Uphero.exe")
+| where FileName =~ "netsh.exe" and ProcessCommandLine has_all ( "advfirewall firewall","add","rule","allow" ) and ProcessCommandLine has_any ("hero.exe", "Uphero.exe")
 | project Timestamp, DeviceName, FileName, ProcessCommandLine, ParentProcessFileName
 ```
