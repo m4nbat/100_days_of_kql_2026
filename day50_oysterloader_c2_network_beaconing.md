@@ -19,7 +19,7 @@ Detects indicators associated with OysterLoader (aka Broomstick/CleanUpLoader). 
 - OysterLoader
 - Broomstick
 - CleanUpLoader
-- Rhysida Ransomware (Affiliate Loader)
+- Rhysida Ransomware
 
 # MITRE ATT&CK
 - T1071.001: Application Layer Protocol: Web Protocols
