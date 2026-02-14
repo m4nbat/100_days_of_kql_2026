@@ -19,7 +19,7 @@ Detects indicators associated with OysterLoader (aka Broomstick/CleanUpLoader). 
 - OysterLoader
 - Broomstick
 - CleanUpLoader
-- Rhysida Ransomware (Affiliate Loader)
+- Rhysida Ransomware
 
 # MITRE ATT&CK
 - T1218.011: System Binary Proxy Execution: Rundll32
@@ -34,7 +34,6 @@ Detects indicators associated with OysterLoader (aka Broomstick/CleanUpLoader). 
 
 ```kql
 DeviceProcessEvents
-| where Timestamp > ago(24h)
 | where FileName =~ "rundll32.exe"
 // The malware specifically uses the export "Test" and often runs from Temp/ProgramData
 | where ProcessCommandLine has "Test" 
