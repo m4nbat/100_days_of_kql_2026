@@ -16,8 +16,6 @@ In February 2026, a sophisticated malware campaign was identified abusing the po
 
 # Threats
 - upStage Proxy
-- Uphero
-- hero.exe
 
 # MITRE ATT&CK
 - T1036.007: Masquerading: Double File Extension (Lookalike domains)
@@ -32,7 +30,6 @@ In February 2026, a sophisticated malware campaign was identified abusing the po
 ``` 
 // Detects the deployment of the proxyware components in the SysWOW64 directory
 DeviceFileEvents
-| where Timestamp > ago(30d)
 | where FolderPath has @"C:\Windows\SysWOW64\hero"
 | where FileName in~ ("Uphero.exe", "hero.exe", "hero.dll")
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, InitiatingProcessCommandLine
