@@ -82,31 +82,3 @@ DeviceProcessEvents
 | where (ProcessCommandLine has "stop" or ProcessCommandLine has "disabled")
 | project Timestamp, DeviceName, ActionType, FileName, ProcessCommandLine, AccountName, InitiatingProcessFileName, InitiatingProcessCommandLine
 ```
-
-## Query 2: Suspicious Service Stop and Disable (Sentinel)
-Equivalent query for Microsoft Sentinel using SecurityEvent.
-
-```kql
-// Define a dummy table for testing
-let SecurityEvent = datatable(
-    TimeGenerated: datetime,
-    Computer: string,
-    EventID: int,
-    CommandLine: string,
-    SubjectUserName: string,
-    ParentProcessName: string,
-    NewProcessName: string
-)
-[
-    // Case 1: Prometei Behavior
-    datetime(2026-02-15 14:30:00), "Server01.contoso.com", 4688, 
-    "sc stop WinRM", "SYSTEM", "C:\\Windows\\System32\\cmd.exe", "C:\\Windows\\System32\\sc.exe"
-];
-SecurityEvent
-| where TimeGenerated > ago(30d)
-| where EventID == 4688
-| where CommandLine has "sc.exe" or NewProcessName has "sc.exe"
-| where CommandLine has "WinRM" 
-| where (CommandLine has "stop" or CommandLine has "disabled")
-| project TimeGenerated, Computer, CommandLine, SubjectUserName, ParentProcessName
-```
