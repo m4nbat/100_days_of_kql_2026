@@ -38,7 +38,7 @@ This query detects the specific command lines used to create the malicious servi
 DeviceProcessEvents
 | where Timestamp > ago(30d)
 | where (ProcessCommandLine has "netsh" and ProcessCommandLine has "advfirewall" and ProcessCommandLine has "firewall" and ProcessCommandLine has "add" and ProcessCommandLine has "sqhost.exe")
-     or (ProcessCommandLine has "sc" and ProcessCommandLine has "create" and ProcessCommandLine has "UPlugPlay")
-     or (ProcessCommandLine has "Add-MpPreference" and ProcessCommandLine has "ExclusionPath" and ProcessCommandLine has "Dell")
+     or (ProcessCommandLine has_all ( "sc","create","UPlugPlay") )
+     or (ProcessCommandLine has_all ( "Add-MpPreference","ExclusionPath","Dell")
 | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, AccountName
 ```
