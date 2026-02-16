@@ -36,7 +36,7 @@ This query checks for the creation or execution of files specifically named in t
 
 ```kql
 let SuspiciousFiles = dynamic(["mshlpda32.dll", "sqhost.exe", "zsvc.exe", "rdpcIip.exe", "netdefender.exe"]);
-let SuspiciousFolders = dynamic(["C:\\Windows\\Dell", "C:\\Windows\\sqhost.exe"]);
+let SuspiciousFolders = dynamic(["C:\\Windows\\Dell"]);
 DeviceProcessEvents
 | where Timestamp > ago(30d)
 | where (FileName has_any (SuspiciousFiles)) 

@@ -37,7 +37,6 @@ This query detects the specific command lines used to create the malicious servi
 ```kql
 DeviceProcessEvents
 | where Timestamp > ago(30d)
-| where ProcessCommandLine has_any ("UPlugPlay", "sqhost.exe", "C:\\Windows\\Dell")
 | where (ProcessCommandLine has "netsh" and ProcessCommandLine has "firewall" and ProcessCommandLine has "add" and ProcessCommandLine has "sqhost.exe")
      or (ProcessCommandLine has "sc" and ProcessCommandLine has "create" and ProcessCommandLine has "UPlugPlay")
      or (ProcessCommandLine has "Add-MpPreference" and ProcessCommandLine has "ExclusionPath" and ProcessCommandLine has "Dell")
