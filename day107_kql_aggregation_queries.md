@@ -1,3 +1,5 @@
+kql
+```
 AuthenticationEvents
 | where result == "Successful Login"
 | summarize total_logins = count() by src_ip
@@ -60,5 +62,11 @@ Email
     total_sent = count(),
     unique_recipient = dcount(recipient)
   by sender
+
+//This shows when each sender first and last sent emails containing that link. If the timestamps are months apart, the attack has been ongoing for a long time.
+Email
+| where link has "docs.google.com" and sender =~ "raul_wilson@jojoshospital.org"
+| summarize first_seen = min(timestamp), last_seen = max(timestamp) by sender
+```
 
 
