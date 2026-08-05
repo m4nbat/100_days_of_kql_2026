@@ -1,3 +1,5 @@
+kql
+```
 // find events between two dates
 AuthenticationEvents
 | where timestamp >= startofday(datetime(2024-05-01))
@@ -30,3 +32,9 @@ AuthenticationEvents
 | summarize hourly_failures = count() by bin(timestamp, 1h)
 | render timechart
 
+//This shows when each sender first and last sent emails containing that link. If the timestamps are months apart, the attack has been ongoing for a long time.
+Email
+| where link has "docs.google.com" and sender =~ "raul_wilson@jojoshospital.org"
+| summarize first_seen = min(timestamp), last_seen = max(timestamp) by sender
+
+```
