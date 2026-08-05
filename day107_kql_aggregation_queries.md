@@ -73,6 +73,14 @@ FileCreationEvents
 | where filename endswith ".encrypted" and hostname =~ "ENRQ-LAPTOP"
 | summarize first_seen = min(timestamp), last_seen = max(timestamp) by filename
 
+Email
+| where link has "baddomain.com"
+| summarize recipients = make_set(recipient) by subject
+
+OutboundNetworkEvents
+| where url has "nothing-to-see-here.net"
+| summarize make_set(url) by src_ip
+
 ```
 
 
