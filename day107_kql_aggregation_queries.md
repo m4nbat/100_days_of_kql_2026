@@ -67,6 +67,12 @@ Email
 Email
 | where link has "docs.google.com" and sender =~ "raul_wilson@jojoshospital.org"
 | summarize first_seen = min(timestamp), last_seen = max(timestamp) by sender
+
+// query that shows all encrypted (.encrypted) files on the machine with hostname ENRQ-LAPTOP. The query should show the "first seen" and "last seen" time for each file by its filename.
+FileCreationEvents
+| where filename endswith ".encrypted" and hostname =~ "ENRQ-LAPTOP"
+| summarize first_seen = min(timestamp), last_seen = max(timestamp) by filename
+
 ```
 
 
