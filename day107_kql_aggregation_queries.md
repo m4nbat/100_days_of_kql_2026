@@ -81,6 +81,21 @@ OutboundNetworkEvents
 | where url has "nothing-to-see-here.net"
 | summarize make_set(url) by src_ip
 
+// a query that shows, for each username, the list of all IP addresses they successfully logged in from, and the count of unique IPs they logged in from. Find the ones that login from more than 5 IPs.
+AuthenticationEvents
+| where result  == "Successful Login"
+| summarize 
+    num_of_ips=make_set(src_ip),
+    ip_count=dcount(src_ip)
+by username
+| where ip_count > 5
+
+// The top operator combines sorting and limiting into one step:
+ProcessEvents
+| summarize execution_count = count() by process_name
+| top 10 by execution_count
+
+
 ```
 
 
